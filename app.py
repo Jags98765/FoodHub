@@ -71,6 +71,227 @@ debug_log("Streamlit page configuration completed")
 
 
 # ============================================================
+# CUSTOM CSS
+# ============================================================
+
+st.markdown(
+    """
+    <style>
+
+    /* ========================================================
+       GLOBAL PAGE
+       ======================================================== */
+
+    .stApp {
+        background-color: #ffffff;
+    }
+
+
+    /* ========================================================
+       FIXED FOODHUB HEADER
+       ======================================================== */
+
+    .foodhub-header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+
+        width: 100%;
+
+        background-color: #f97316;
+
+        color: white;
+
+        padding: 14px 20px;
+
+        text-align: center;
+
+        font-size: 22px;
+        font-weight: 700;
+
+        z-index: 999999;
+
+        box-shadow:
+            0 3px 10px rgba(0, 0, 0, 0.15);
+
+        border-bottom:
+            2px solid #ea580c;
+    }
+
+
+    /* ========================================================
+       MOVE MAIN CONTENT DOWN BECAUSE HEADER IS FIXED
+       ======================================================== */
+
+    .block-container {
+        padding-top: 90px !important;
+        padding-bottom: 120px !important;
+    }
+
+
+    /* ========================================================
+       CHAT CONVERSATION CONTAINER
+       ======================================================== */
+
+    .foodhub-chat-container {
+
+        border: 3px solid #f97316;
+
+        border-radius: 18px;
+
+        padding: 20px;
+
+        margin-top: 20px;
+        margin-bottom: 20px;
+
+        background-color: #fffaf5;
+
+        box-shadow:
+            0 4px 14px rgba(249, 115, 22, 0.15);
+
+        min-height: 300px;
+    }
+
+
+    /* ========================================================
+       CHAT MESSAGE SPACING
+       ======================================================== */
+
+    [data-testid="stChatMessage"] {
+        margin-bottom: 10px;
+    }
+
+
+    /* ========================================================
+       USER CHAT MESSAGE
+       ======================================================== */
+
+    [data-testid="stChatMessage"]:has(
+        [data-testid="chatAvatarIcon-user"]
+    ) {
+
+        background-color: #fff7ed;
+
+        border-radius: 12px;
+
+        padding: 8px;
+
+    }
+
+
+    /* ========================================================
+       ASSISTANT CHAT MESSAGE
+       ======================================================== */
+
+    [data-testid="stChatMessage"]:has(
+        [data-testid="chatAvatarIcon-assistant"]
+    ) {
+
+        background-color: #ffffff;
+
+        border-radius: 12px;
+
+        padding: 8px;
+
+    }
+
+
+    /* ========================================================
+       CHAT INPUT BORDER
+       ======================================================== */
+
+    [data-testid="stChatInput"] {
+
+        border: 2px solid #f97316 !important;
+
+        border-radius: 14px !important;
+
+    }
+
+
+    /* ========================================================
+       CHAT INPUT FOCUS
+       ======================================================== */
+
+    [data-testid="stChatInput"]:focus-within {
+
+        border-color: #ea580c !important;
+
+        box-shadow:
+            0 0 0 2px rgba(249, 115, 22, 0.15) !important;
+
+    }
+
+
+    /* ========================================================
+       SIDEBAR BUTTON
+       ======================================================== */
+
+    section[data-testid="stSidebar"] button {
+
+        border-color: #f97316;
+
+    }
+
+
+    /* ========================================================
+       MOBILE HEADER
+       ======================================================== */
+
+    @media (max-width: 768px) {
+
+        .foodhub-header {
+
+            font-size: 18px;
+
+            padding: 12px 10px;
+
+        }
+
+        .block-container {
+
+            padding-top: 75px !important;
+
+            padding-left: 10px !important;
+
+            padding-right: 10px !important;
+
+        }
+
+        .foodhub-chat-container {
+
+            padding: 12px;
+
+            border-width: 2px;
+
+            border-radius: 14px;
+
+        }
+
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+
+# ============================================================
+# FIXED FOODHUB HEADER
+# ============================================================
+
+st.markdown(
+    """
+    <div class="foodhub-header">
+        🍔 FoodHub AI-Powered Customer Support
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
+
+
+# ============================================================
 # SESSION STATE
 # ============================================================
 
@@ -146,14 +367,6 @@ debug_log(
     "Valid conversation history entries: "
     f"{len(st.session_state.conversation_history)}"
 )
-
-
-# ============================================================
-# PAGE HEADER
-# ============================================================
-
-st.title("🍔 FoodHub")
-st.caption("AI-Powered Customer Support")
 
 
 # ============================================================
@@ -825,6 +1038,8 @@ sql_order_retrieval_tool = (
 debug_log(
     "SQL_Order_Retrieval_Tool registered successfully"
 )
+
+
 # ============================================================
 # ORDER QUERY TOOL
 # ============================================================
@@ -1417,10 +1632,6 @@ def chat_with_customer_support(
         f"{len(customer_query)} characters"
     )
 
-    # IMPORTANT:
-    # We deliberately do not log the full customer query
-    # because it may contain sensitive information.
-
     if not customer_query:
 
         debug_log(
@@ -1966,6 +2177,20 @@ Current Customer Query:
         "response": final_response,
         "escalation_required": escalation_required,
     }
+
+
+# ============================================================
+# CHAT CONVERSATION CONTAINER - START
+# ============================================================
+
+st.markdown(
+    """
+    <div class="foodhub-chat-container">
+    """,
+    unsafe_allow_html=True,
+)
+
+
 # ============================================================
 # DISPLAY CONVERSATION
 # ============================================================
@@ -1980,14 +2205,6 @@ for index, message in enumerate(
 
     # --------------------------------------------------------
     # Defensive validation
-    # --------------------------------------------------------
-    #
-    # This is important because your original error was:
-    #
-    # TypeError: string indices must be integers
-    #
-    # If an invalid/string item somehow enters session state,
-    # we safely skip it instead of crashing the app.
     # --------------------------------------------------------
 
     if not isinstance(message, dict):
@@ -2035,7 +2252,7 @@ for index, message in enumerate(
 
         with st.chat_message(
             "user",
-            avatar="🧑",
+            avatar="🙂",
         ):
 
             st.write(
@@ -2057,6 +2274,18 @@ for index, message in enumerate(
             st.write(
                 content
             )
+
+
+# ============================================================
+# CHAT CONVERSATION CONTAINER - END
+# ============================================================
+
+st.markdown(
+    """
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 # ============================================================
@@ -2084,7 +2313,7 @@ if customer_query:
 
     with st.chat_message(
         "user",
-        avatar="🧑",
+        avatar="🙂",
     ):
 
         st.write(
