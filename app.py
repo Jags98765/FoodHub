@@ -71,162 +71,176 @@ debug_log("Streamlit page configuration completed")
 
 
 # ============================================================
-# CUSTOM UI STYLING
+# CUSTOM CSS
 # ============================================================
 
 st.markdown(
     """
     <style>
 
-    /* ========================================================
-       GLOBAL PAGE
-       ======================================================== */
+    /* --------------------------------------------------------
+       MAIN APP
+       -------------------------------------------------------- */
 
     .stApp {
-        background-color: #FFFFFF;
+        background-color: #ffffff;
     }
 
 
-    /* ========================================================
+    /* --------------------------------------------------------
+       MAIN CONTENT WIDTH
+       -------------------------------------------------------- */
+
+    .block-container {
+        max-width: 760px;
+        padding-top: 1.5rem;
+        padding-bottom: 2rem;
+    }
+
+
+    /* --------------------------------------------------------
        FOODHUB HEADER
-       ======================================================== */
+       -------------------------------------------------------- */
 
     .foodhub-header {
-        background: #FDBA74;
-        border-radius: 12px;
-
-        padding: 14px 20px 16px 20px;
-
-        margin: 0 auto 18px auto;
-
-        width: fit-content;
-        min-width: 290px;
-        max-width: 100%;
-
-        text-align: center;
-
+        width: 100%;
         box-sizing: border-box;
 
-        line-height: 1.25;
+        background-color: #FC8019;
 
-        overflow: visible;
+        color: #ffffff;
+
+        border-radius: 12px;
+
+        padding: 14px 18px 15px 18px;
+
+        margin-bottom: 14px;
+
+        line-height: 1.15;
+
+        box-shadow:
+            0 2px 6px rgba(252, 128, 25, 0.18);
     }
 
 
     .foodhub-title {
-        color: #431407;
-
-        font-size: 30px;
-        font-weight: 700;
-
-        line-height: 1.35;
+        font-size: 28px;
+        font-weight: 800;
 
         margin: 0;
         padding: 0;
+
+        color: #ffffff;
+
+        line-height: 1.15;
 
         white-space: nowrap;
     }
 
 
     .foodhub-subtitle {
-        color: #7C2D12;
-
         font-size: 17px;
-        font-weight: 600;
+        font-weight: 500;
 
-        line-height: 1.45;
+        margin-top: 5px;
 
-        margin: 3px 0 0 0;
-        padding: 0;
+        color: #ffffff;
+
+        line-height: 1.25;
 
         white-space: nowrap;
     }
 
 
-    /* ========================================================
+    /* --------------------------------------------------------
        CHAT CONVERSATION BORDER
-       ======================================================== */
+       -------------------------------------------------------- */
 
-    .foodhub-chat-container {
-        border: 2px solid #FDBA74;
+    .chat-wrapper {
+        border: 2px solid #FC8019;
 
-        border-radius: 14px;
+        border-radius: 12px;
 
-        padding: 12px 14px 10px 14px;
+        padding: 14px 14px 4px 14px;
 
-        margin-top: 4px;
-        margin-bottom: 12px;
-
-        background-color: #FFFDFB;
+        background-color: #ffffff;
 
         box-sizing: border-box;
 
-        min-height: 60px;
+        margin-bottom: 14px;
     }
 
 
-    /* ========================================================
-       CHAT MESSAGE SPACING
-       ======================================================== */
+    /* --------------------------------------------------------
+       STREAMLIT CHAT MESSAGE SPACING
+       -------------------------------------------------------- */
 
-    div[data-testid="stChatMessage"] {
-        margin-bottom: 6px;
+    [data-testid="stChatMessage"] {
+        padding-top: 4px;
+        padding-bottom: 4px;
     }
 
 
-    /* ========================================================
+    /* --------------------------------------------------------
        CHAT INPUT
-       ======================================================== */
+       -------------------------------------------------------- */
 
-    div[data-testid="stChatInput"] {
-        margin-top: 8px;
+    [data-testid="stChatInput"] {
+        border-radius: 10px;
     }
 
 
-    /* ========================================================
+    /* --------------------------------------------------------
        SIDEBAR
-       ======================================================== */
+       -------------------------------------------------------- */
 
     section[data-testid="stSidebar"] {
-        background-color: #FFF7ED;
+        background-color: #fff8f3;
     }
 
 
-    /* ========================================================
-       CLEAR BUTTON - SMALL / SUBTLE
-       ======================================================== */
+    /* --------------------------------------------------------
+       SIDEBAR BUTTON
+       -------------------------------------------------------- */
 
-    .clear-button-label {
-        color: #9A3412;
-        font-size: 13px;
-        font-weight: 500;
-        margin-bottom: 5px;
+    section[data-testid="stSidebar"] button {
+        border-color: #FC8019;
     }
 
 
-    /* ========================================================
-       MOBILE RESPONSIVE HEADER
-       ======================================================== */
+    section[data-testid="stSidebar"] button:hover {
+        border-color: #FC8019;
+        color: #FC8019;
+    }
+
+
+    /* --------------------------------------------------------
+       MOBILE RESPONSIVENESS
+       -------------------------------------------------------- */
 
     @media (max-width: 600px) {
 
-        .foodhub-header {
-            width: 100%;
-            min-width: 0;
-
-            padding: 13px 12px 15px 12px;
-
-            border-radius: 10px;
+        .block-container {
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+            padding-top: 1rem;
         }
 
         .foodhub-title {
-            font-size: 26px;
+            font-size: 24px;
         }
 
         .foodhub-subtitle {
             font-size: 15px;
         }
 
+        .foodhub-header {
+            padding: 13px 15px 14px 15px;
+        }
+
+        .chat-wrapper {
+            padding: 10px 9px 3px 9px;
+        }
     }
 
     </style>
@@ -314,23 +328,6 @@ debug_log(
 
 
 # ============================================================
-# PAGE HEADER
-# ============================================================
-
-st.markdown(
-    """
-    <div class="foodhub-header">
-        <div class="foodhub-title">🍔 FoodHub</div>
-        <div class="foodhub-subtitle">
-            AI-Powered Customer Support
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-
-# ============================================================
 # SIDEBAR
 # ============================================================
 
@@ -338,32 +335,37 @@ with st.sidebar:
 
     st.subheader("Chat Settings")
 
-    # --------------------------------------------------------
-    # Clear conversation is hidden inside an expander so the
-    # normal sidebar remains clean.
-    # --------------------------------------------------------
+    if st.button(
+        "🗑️ Clear Conversation",
+        use_container_width=True,
+    ):
 
-    with st.expander("⚙️ Chat Options"):
-
-        st.markdown(
-            '<div class="clear-button-label">'
-            'Conversation controls'
-            '</div>',
-            unsafe_allow_html=True,
+        debug_log(
+            "User requested conversation history reset"
         )
 
-        if st.button(
-            "🗑️ Clear Conversation",
-            use_container_width=True,
-        ):
+        st.session_state.conversation_history = []
 
-            debug_log(
-                "User requested conversation history reset"
-            )
+        st.rerun()
 
-            st.session_state.conversation_history = []
 
-            st.rerun()
+# ============================================================
+# FOODHUB HEADER
+# ============================================================
+
+st.markdown(
+    """
+    <div class="foodhub-header">
+        <div class="foodhub-title">
+            🍔 FoodHub
+        </div>
+        <div class="foodhub-subtitle">
+            AI-Powered Customer Support
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 # ============================================================
@@ -2155,6 +2157,16 @@ Current Customer Query:
 
 
 # ============================================================
+# CHAT CONVERSATION CONTAINER
+# ============================================================
+
+st.markdown(
+    '<div class="chat-wrapper">',
+    unsafe_allow_html=True,
+)
+
+
+# ============================================================
 # DISPLAY CONVERSATION
 # ============================================================
 
@@ -2163,23 +2175,9 @@ debug_log(
 )
 
 
-# ------------------------------------------------------------
-# Conversation container
-# ------------------------------------------------------------
-
-st.markdown(
-    '<div class="foodhub-chat-container">',
-    unsafe_allow_html=True,
-)
-
-
 for index, message in enumerate(
     st.session_state.conversation_history
 ):
-
-    # --------------------------------------------------------
-    # Defensive validation
-    # --------------------------------------------------------
 
     if not isinstance(message, dict):
 
@@ -2226,7 +2224,7 @@ for index, message in enumerate(
 
         with st.chat_message(
             "user",
-            avatar="👤",
+            avatar="🙂",
         ):
 
             st.write(
@@ -2250,8 +2248,12 @@ for index, message in enumerate(
             )
 
 
+# ============================================================
+# CLOSE CHAT CONTAINER
+# ============================================================
+
 st.markdown(
-    '</div>',
+    "</div>",
     unsafe_allow_html=True,
 )
 
@@ -2282,7 +2284,7 @@ if customer_query:
 
     with st.chat_message(
         "user",
-        avatar="👤",
+        avatar="🙂",
     ):
 
         st.write(
