@@ -54,7 +54,9 @@ def debug_log(message, level="info"):
         logger.info(safe_message)
 
 
-debug_log("========== FoodHub application starting ==========")
+debug_log(
+    "========== FoodHub application starting =========="
+)
 
 
 # ============================================================
@@ -67,7 +69,9 @@ st.set_page_config(
     layout="centered",
 )
 
-debug_log("Streamlit page configuration completed")
+debug_log(
+    "Streamlit page configuration completed"
+)
 
 
 # ============================================================
@@ -88,83 +92,85 @@ st.markdown(
 
 
     /* ========================================================
-       FIXED FOODHUB HEADER
-       ======================================================== */
-
-    .foodhub-header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-
-        width: 100%;
-
-        background-color: #f97316;
-
-        color: white;
-
-        padding: 14px 20px;
-
-        text-align: center;
-
-        font-size: 22px;
-        font-weight: 700;
-
-        z-index: 999999;
-
-        box-shadow:
-            0 3px 10px rgba(0, 0, 0, 0.15);
-
-        border-bottom:
-            2px solid #ea580c;
-    }
-
-
-    /* ========================================================
-       MOVE MAIN CONTENT DOWN BECAUSE HEADER IS FIXED
+       MAIN CONTENT WIDTH
        ======================================================== */
 
     .block-container {
-        padding-top: 90px !important;
-        padding-bottom: 120px !important;
+        max-width: 760px !important;
+
+        padding-top: 25px !important;
+
+        padding-bottom: 100px !important;
     }
 
 
     /* ========================================================
-       CHAT CONVERSATION CONTAINER
+       FOODHUB HEADER
        ======================================================== */
 
-    .foodhub-chat-container {
+    .foodhub-header {
+        width: 100%;
 
-        border: 3px solid #f97316;
+        box-sizing: border-box;
 
-        border-radius: 18px;
+        background-color: #fdba74;
 
-        padding: 20px;
+        color: #7c2d12;
 
-        margin-top: 20px;
-        margin-bottom: 20px;
+        border-radius: 14px;
+
+        padding: 12px 18px;
+
+        margin: 0 auto 18px auto;
+
+        text-align: center;
+
+        font-size: 20px;
+
+        font-weight: 700;
+
+        line-height: 1.35;
+
+        box-shadow:
+            0 2px 8px rgba(249, 115, 22, 0.12);
+    }
+
+
+    /* ========================================================
+       MAIN CHAT / CONVERSATION AREA
+       ======================================================== */
+
+    [data-testid="stMainBlockContainer"] {
+
+        border: 2px solid #fdba74;
+
+        border-radius: 16px;
+
+        padding: 20px !important;
 
         background-color: #fffaf5;
 
         box-shadow:
-            0 4px 14px rgba(249, 115, 22, 0.15);
-
-        min-height: 300px;
+            0 2px 10px rgba(249, 115, 22, 0.08);
     }
 
 
     /* ========================================================
-       CHAT MESSAGE SPACING
+       CHAT MESSAGES
        ======================================================== */
 
     [data-testid="stChatMessage"] {
-        margin-bottom: 10px;
+
+        border-radius: 12px;
+
+        margin-bottom: 8px;
+
+        padding: 8px 10px;
     }
 
 
     /* ========================================================
-       USER CHAT MESSAGE
+       USER MESSAGE
        ======================================================== */
 
     [data-testid="stChatMessage"]:has(
@@ -173,15 +179,11 @@ st.markdown(
 
         background-color: #fff7ed;
 
-        border-radius: 12px;
-
-        padding: 8px;
-
     }
 
 
     /* ========================================================
-       ASSISTANT CHAT MESSAGE
+       ASSISTANT MESSAGE
        ======================================================== */
 
     [data-testid="stChatMessage"]:has(
@@ -190,22 +192,20 @@ st.markdown(
 
         background-color: #ffffff;
 
-        border-radius: 12px;
-
-        padding: 8px;
-
     }
 
 
     /* ========================================================
-       CHAT INPUT BORDER
+       CHAT INPUT
        ======================================================== */
 
     [data-testid="stChatInput"] {
 
-        border: 2px solid #f97316 !important;
+        border: 2px solid #fdba74 !important;
 
         border-radius: 14px !important;
+
+        background-color: #ffffff !important;
 
     }
 
@@ -216,57 +216,64 @@ st.markdown(
 
     [data-testid="stChatInput"]:focus-within {
 
-        border-color: #ea580c !important;
+        border-color: #fb923c !important;
 
         box-shadow:
-            0 0 0 2px rgba(249, 115, 22, 0.15) !important;
+            0 0 0 2px rgba(251, 146, 60, 0.12) !important;
 
     }
 
 
     /* ========================================================
-       SIDEBAR BUTTON
+       HIDE SIDEBAR
        ======================================================== */
 
-    section[data-testid="stSidebar"] button {
+    section[data-testid="stSidebar"] {
 
-        border-color: #f97316;
+        display: none !important;
 
     }
 
 
     /* ========================================================
-       MOBILE HEADER
+       MOBILE RESPONSIVE DESIGN
        ======================================================== */
 
     @media (max-width: 768px) {
 
-        .foodhub-header {
-
-            font-size: 18px;
-
-            padding: 12px 10px;
-
-        }
-
         .block-container {
 
-            padding-top: 75px !important;
+            max-width: 100% !important;
 
             padding-left: 10px !important;
 
             padding-right: 10px !important;
 
+            padding-top: 15px !important;
+
+            padding-bottom: 80px !important;
         }
 
-        .foodhub-chat-container {
 
-            padding: 12px;
+        .foodhub-header {
+
+            font-size: 17px;
+
+            padding: 10px 12px;
+
+            border-radius: 12px;
+
+            margin-bottom: 12px;
+        }
+
+
+        [data-testid="stMainBlockContainer"] {
+
+            padding: 12px !important;
 
             border-width: 2px;
 
             border-radius: 14px;
-
         }
 
     }
@@ -278,13 +285,14 @@ st.markdown(
 
 
 # ============================================================
-# FIXED FOODHUB HEADER
+# FOODHUB HEADER
 # ============================================================
 
 st.markdown(
     """
     <div class="foodhub-header">
-        🍔 FoodHub AI-Powered Customer Support
+        🍔 FoodHub<br>
+        AI-Powered Customer Support
     </div>
     """,
     unsafe_allow_html=True,
@@ -329,6 +337,7 @@ for message in st.session_state.conversation_history:
         continue
 
     role = message.get("role")
+
     content = message.get("content")
 
     if role in (
@@ -367,28 +376,6 @@ debug_log(
     "Valid conversation history entries: "
     f"{len(st.session_state.conversation_history)}"
 )
-
-
-# ============================================================
-# SIDEBAR
-# ============================================================
-
-with st.sidebar:
-
-    st.subheader("Chat Settings")
-
-    if st.button(
-        "🗑️ Clear Conversation",
-        use_container_width=True,
-    ):
-
-        debug_log(
-            "User requested conversation history reset"
-        )
-
-        st.session_state.conversation_history = []
-
-        st.rerun()
 
 
 # ============================================================
@@ -607,9 +594,11 @@ def get_conversation_context():
     ):
 
         if not isinstance(message, dict):
+
             continue
 
         role = message.get("role")
+
         content = message.get("content")
 
         if role and content is not None:
@@ -2180,24 +2169,13 @@ Current Customer Query:
 
 
 # ============================================================
-# CHAT CONVERSATION CONTAINER - START
-# ============================================================
-
-st.markdown(
-    """
-    <div class="foodhub-chat-container">
-    """,
-    unsafe_allow_html=True,
-)
-
-
-# ============================================================
 # DISPLAY CONVERSATION
 # ============================================================
 
 debug_log(
     "Rendering conversation history"
 )
+
 
 for index, message in enumerate(
     st.session_state.conversation_history
@@ -2218,6 +2196,7 @@ for index, message in enumerate(
         continue
 
     role = message.get("role")
+
     content = message.get("content")
 
     if role not in (
@@ -2277,18 +2256,6 @@ for index, message in enumerate(
 
 
 # ============================================================
-# CHAT CONVERSATION CONTAINER - END
-# ============================================================
-
-st.markdown(
-    """
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-
-# ============================================================
 # CUSTOMER INPUT
 # ============================================================
 
@@ -2306,6 +2273,7 @@ if customer_query:
     debug_log(
         "Chat input received"
     )
+
 
     # --------------------------------------------------------
     # Display user message immediately
