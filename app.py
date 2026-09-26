@@ -38,18 +38,14 @@ logger = logging.getLogger("foodhub")
 
 
 def debug_log(message, level="info"):
-
     safe_message = str(message)
 
     if level == "error":
         logger.error(safe_message)
-
     elif level == "warning":
         logger.warning(safe_message)
-
     elif level == "debug":
         logger.debug(safe_message)
-
     else:
         logger.info(safe_message)
 
@@ -73,157 +69,169 @@ debug_log("Streamlit page configuration completed")
 # ============================================================
 # CUSTOM CSS
 # ============================================================
+#
+# IMPORTANT:
+# - No orange border around the full page
+# - No blank orange block
+# - No fixed full-width orange bar
+# - Header is a normal content block
+# - Swiggy-style orange, but lighter/cleaner
+# - Header text is fully visible
+# - Chat remains normal Streamlit chat style
+#
 
 st.markdown(
     """
     <style>
 
-    /* --------------------------------------------------------
-       MAIN APP
-       -------------------------------------------------------- */
+    /* ========================================================
+       MAIN PAGE
+       ======================================================== */
 
     .stApp {
         background-color: #ffffff;
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        MAIN CONTENT WIDTH
-       -------------------------------------------------------- */
+       ======================================================== */
 
     .block-container {
         max-width: 760px;
-        padding-top: 1.5rem;
+        padding-top: 2rem;
         padding-bottom: 2rem;
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        FOODHUB HEADER
-       -------------------------------------------------------- */
+       ======================================================== */
 
     .foodhub-header {
-        width: 100%;
-        box-sizing: border-box;
-
-        background-color: #FC8019;
-
+        background-color: #ff7a45;
         color: #ffffff;
 
         border-radius: 12px;
 
-        padding: 14px 18px 15px 18px;
+        padding: 14px 20px 13px 20px;
 
-        margin-bottom: 14px;
+        margin: 0 auto 20px auto;
 
-        line-height: 1.15;
+        width: 100%;
+        box-sizing: border-box;
 
-        box-shadow:
-            0 2px 6px rgba(252, 128, 25, 0.18);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+        text-align: left;
     }
 
-
     .foodhub-title {
-        font-size: 28px;
-        font-weight: 800;
+        font-size: 27px;
+        font-weight: 750;
+        line-height: 1.25;
 
         margin: 0;
         padding: 0;
 
         color: #ffffff;
-
-        line-height: 1.15;
-
-        white-space: nowrap;
     }
-
 
     .foodhub-subtitle {
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 500;
+        line-height: 1.35;
 
-        margin-top: 5px;
+        margin-top: 2px;
+        padding: 0;
 
         color: #ffffff;
-
-        line-height: 1.25;
-
-        white-space: nowrap;
     }
 
 
-    /* --------------------------------------------------------
-       CHAT CONVERSATION BORDER
-       -------------------------------------------------------- */
+    /* ========================================================
+       CHAT AREA
+       ======================================================== */
 
-    .chat-wrapper {
-        border: 2px solid #FC8019;
+    [data-testid="stChatMessage"] {
+        margin-bottom: 8px;
+    }
+
+
+    /* ========================================================
+       USER CHAT BUBBLE
+       ======================================================== */
+
+    [data-testid="stChatMessage"]:has(
+        [data-testid="chatAvatarIcon-user"]
+    ) {
+
+        background-color: #fff7f2;
 
         border-radius: 12px;
 
-        padding: 14px 14px 4px 14px;
-
-        background-color: #ffffff;
-
-        box-sizing: border-box;
-
-        margin-bottom: 14px;
+        padding: 4px 8px;
     }
 
 
-    /* --------------------------------------------------------
-       STREAMLIT CHAT MESSAGE SPACING
-       -------------------------------------------------------- */
+    /* ========================================================
+       ASSISTANT CHAT BUBBLE
+       ======================================================== */
 
-    [data-testid="stChatMessage"] {
-        padding-top: 4px;
-        padding-bottom: 4px;
+    [data-testid="stChatMessage"]:has(
+        [data-testid="chatAvatarIcon-assistant"]
+    ) {
+
+        background-color: #f7f7f7;
+
+        border-radius: 12px;
+
+        padding: 4px 8px;
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        CHAT INPUT
-       -------------------------------------------------------- */
+       ======================================================== */
 
     [data-testid="stChatInput"] {
-        border-radius: 10px;
+        border-radius: 12px;
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        SIDEBAR
-       -------------------------------------------------------- */
+       ======================================================== */
 
     section[data-testid="stSidebar"] {
-        background-color: #fff8f3;
+        background-color: #fffaf7;
     }
 
 
-    /* --------------------------------------------------------
+    /* ========================================================
        SIDEBAR BUTTON
-       -------------------------------------------------------- */
+       ======================================================== */
 
     section[data-testid="stSidebar"] button {
-        border-color: #FC8019;
+        border-radius: 8px;
     }
 
 
-    section[data-testid="stSidebar"] button:hover {
-        border-color: #FC8019;
-        color: #FC8019;
-    }
-
-
-    /* --------------------------------------------------------
+    /* ========================================================
        MOBILE RESPONSIVENESS
-       -------------------------------------------------------- */
+       ======================================================== */
 
-    @media (max-width: 600px) {
+    @media (max-width: 768px) {
 
         .block-container {
-            padding-left: 0.75rem;
-            padding-right: 0.75rem;
+            padding-left: 1rem;
+            padding-right: 1rem;
             padding-top: 1rem;
+        }
+
+        .foodhub-header {
+            padding: 13px 16px 12px 16px;
+            margin-bottom: 16px;
         }
 
         .foodhub-title {
@@ -233,17 +241,26 @@ st.markdown(
         .foodhub-subtitle {
             font-size: 15px;
         }
-
-        .foodhub-header {
-            padding: 13px 15px 14px 15px;
-        }
-
-        .chat-wrapper {
-            padding: 10px 9px 3px 9px;
-        }
     }
 
     </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+
+# ============================================================
+# FOODHUB HEADER
+# ============================================================
+
+st.markdown(
+    """
+    <div class="foodhub-header">
+        <div class="foodhub-title">🍔 FoodHub</div>
+        <div class="foodhub-subtitle">
+            AI-Powered Customer Support
+        </div>
+    </div>
     """,
     unsafe_allow_html=True,
 )
@@ -306,9 +323,7 @@ for message in st.session_state.conversation_history:
         malformed_history_count += 1
 
 
-st.session_state.conversation_history = (
-    clean_history
-)
+st.session_state.conversation_history = clean_history
 
 
 if malformed_history_count > 0:
@@ -350,25 +365,6 @@ with st.sidebar:
 
 
 # ============================================================
-# FOODHUB HEADER
-# ============================================================
-
-st.markdown(
-    """
-    <div class="foodhub-header">
-        <div class="foodhub-title">
-            🍔 FoodHub
-        </div>
-        <div class="foodhub-subtitle">
-            AI-Powered Customer Support
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True,
-)
-
-
-# ============================================================
 # GROQ API KEY
 # ============================================================
 
@@ -376,9 +372,7 @@ try:
 
     groq_api_key = st.secrets["GROQ_API_KEY"]
 
-    os.environ["GROQ_API_KEY"] = (
-        groq_api_key
-    )
+    os.environ["GROQ_API_KEY"] = groq_api_key
 
     debug_log(
         "GROQ API key loaded successfully"
@@ -1609,6 +1603,10 @@ def chat_with_customer_support(
         f"{len(customer_query)} characters"
     )
 
+    # IMPORTANT:
+    # We deliberately do not log the full customer query
+    # because it may contain sensitive information.
+
     if not customer_query:
 
         debug_log(
@@ -2157,16 +2155,6 @@ Current Customer Query:
 
 
 # ============================================================
-# CHAT CONVERSATION CONTAINER
-# ============================================================
-
-st.markdown(
-    '<div class="chat-wrapper">',
-    unsafe_allow_html=True,
-)
-
-
-# ============================================================
 # DISPLAY CONVERSATION
 # ============================================================
 
@@ -2174,10 +2162,13 @@ debug_log(
     "Rendering conversation history"
 )
 
-
 for index, message in enumerate(
     st.session_state.conversation_history
 ):
+
+    # --------------------------------------------------------
+    # Defensive validation
+    # --------------------------------------------------------
 
     if not isinstance(message, dict):
 
@@ -2249,16 +2240,6 @@ for index, message in enumerate(
 
 
 # ============================================================
-# CLOSE CHAT CONTAINER
-# ============================================================
-
-st.markdown(
-    "</div>",
-    unsafe_allow_html=True,
-)
-
-
-# ============================================================
 # CUSTOMER INPUT
 # ============================================================
 
@@ -2276,7 +2257,6 @@ if customer_query:
     debug_log(
         "Chat input received"
     )
-
 
     # --------------------------------------------------------
     # Display user message immediately
